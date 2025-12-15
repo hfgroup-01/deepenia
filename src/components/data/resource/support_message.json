@@ -1,0 +1,152 @@
+{
+  "id": "102019a333c492f7e6f86edd32ab61d1f59",
+  "version": "102019b2203e15f7947b569d09de7bc8fb5",
+  "schema": {
+    "name": "support_message",
+    "description": "Represents a single message within a support conversation.",
+    "fields": [
+      {
+        "name": "id",
+        "description": "Unique identifier for each data of this entity.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 1,
+          "reason": "Public unique identifier for the message."
+        }
+      },
+      {
+        "name": "data_creator",
+        "description": "id of the user who creates the record",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Internal user identifier for auditing purposes."
+        }
+      },
+      {
+        "name": "data_updater",
+        "description": "id of the user who updates the record",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Internal user identifier for auditing purposes."
+        }
+      },
+      {
+        "name": "create_time",
+        "description": "create time in timestamp unix",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Internal metadata for tracking creation time."
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "update_time",
+        "description": "update time in timestamp unix",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Internal metadata for tracking update time."
+        },
+        "format": "timestamp"
+      },
+      {
+        "name": "conversation_id",
+        "description": "Foreign key linking to the support_conversation entity.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Links the message to its parent conversation."
+        }
+      },
+      {
+        "name": "sender",
+        "description": "Indicates who sent the message.",
+        "type": 100,
+        "compliance": {
+          "confidentiality": 2,
+          "reason": "Distinguishes between user and agent messages for display."
+        },
+        "enumeration": [
+          {
+            "value": "Unspecified"
+          },
+          {
+            "number": 1,
+            "value": "User"
+          },
+          {
+            "number": 2,
+            "value": "Agent"
+          }
+        ]
+      },
+      {
+        "name": "content",
+        "description": "The text content of the message.",
+        "type": 1,
+        "compliance": {
+          "confidentiality": 3,
+          "reason": "Message content can contain sensitive user information."
+        }
+      }
+    ],
+    "indexes": [
+      {
+        "fields": [
+          "id"
+        ],
+        "unique": true,
+        "primary": true,
+        "order": false
+      },
+      {
+        "fields": [
+          "data_creator"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "data_updater"
+        ],
+        "order": false
+      },
+      {
+        "fields": [
+          "conversation_id"
+        ],
+        "order": false
+      }
+    ],
+    "relations": [
+      {
+        "referencing_fields": [
+          "conversation_id"
+        ],
+        "referenced_entity": {
+          "name": "support_conversation"
+        },
+        "referenced_fields": [
+          "id"
+        ],
+        "cascade": true
+      }
+    ]
+  },
+  "task": {
+    "id": "694000cc4f4905925fbc16f7",
+    "root": "6902507d3f4d1733d49dcb09",
+    "project": "6902507d3f4d1733d49dcb08",
+    "user": "a8818360-4011-7096-e097-b566da23d857"
+  },
+  "namespace": {
+    "id": "01987547fc6c72ecb453bd2736bd4ea0",
+    "tenant": 2,
+    "name": "global-1",
+    "default": true
+  },
+  "revision": 1
+}
